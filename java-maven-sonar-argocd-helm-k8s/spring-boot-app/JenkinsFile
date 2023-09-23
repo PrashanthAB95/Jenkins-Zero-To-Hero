@@ -7,9 +7,18 @@ pipeline {
   }
   stages {
     stage('Checkout') {
-      steps {
-        sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/PrashanthAB95/Jenkins-Zero-To-Hero.git'
+    environment {
+            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
+            GIT_USER_NAME = "PrashanthAB95"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "prashanthab39@gmail.com@gmail.com"
+                    git config user.name "PrashanthAB95"
+                    sh 'echo passed'
+                    //git branch: 'main', url: 'https://github.com/PrashanthAB95/Jenkins-Zero-To-Hero.git'
+                  '''
       }
     }
     stage('Build and Test') {
